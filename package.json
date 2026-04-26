@@ -1,0 +1,30 @@
+{
+  "name": "@payvizio/web-sdk",
+  "version": "0.1.0",
+  "description": "Drop-in checkout SDK for Payvizio. Opens a hosted checkout modal and surfaces payment lifecycle events to the merchant page.",
+  "main": "dist/payvizio.umd.js",
+  "module": "dist/payvizio.esm.js",
+  "types": "dist/payvizio.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && rollup -c",
+    "dev": "tsc -p tsconfig.json --watch",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "payvizio",
+    "payments",
+    "checkout",
+    "upi",
+    "card",
+    "bnpl"
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
