@@ -1,0 +1,41 @@
+name: Publish Web SDK
+
+# Tag-driven npm publish for @payvizio/web-sdk. Required secret: NPM_TOKEN.
+# UMD bundle is also uploaded as a GitHub Release asset so a CDN can mirror
+# from "https://github.com/.../releases/download/vX.Y.Z/payvizio.umd.js" or
+# you can point Cloudflare/jsDelivr at the tagged GitHub release.
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm test --if-present
+      - run: npm run build
+      - name: Verify package version matches tag
+        run: |
+          PKG="$(node -p "require('./package.json').version")"
+          TAG="${GITHUB_REF_NAME#v}"
+          [ "$PKG" = "$TAG" ] || { echo "Version mismatch: pkg=$PKG tag=$TAG"; exit 1; }
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Upload UMD bundle to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/payvizio.umd.js
+            dist/payvizio.umd.js.map
