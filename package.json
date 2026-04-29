@@ -1,7 +1,13 @@
 {
   "name": "@payvizio/web-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Drop-in checkout SDK for Payvizio. Opens a hosted checkout modal and surfaces payment lifecycle events to the merchant page.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/payvizio-pg/payvizio-web-sdk.git"
+  },
+  "homepage": "https://docs.payvizio.com",
+  "bugs": "https://github.com/payvizio-pg/payvizio-web-sdk/issues",
   "main": "dist/payvizio.js",
   "module": "dist/payvizio.js",
   "types": "dist/payvizio.d.ts",
